@@ -101,6 +101,7 @@ if (footerContainer) {
   footerObserver.observe(footerContainer);
 }
 
+
 /*==================== FETCH AND UPDATE PROJECT COUNT ====================*/
 function updateProjectCount() {
   fetch('https://api.github.com/users/valmindo')
@@ -111,7 +112,7 @@ function updateProjectCount() {
     .then(data => {
       if (data && data.public_repos !== undefined) {
         const projectCount = data.public_repos;
-        document.getElementById('project-count').textContent = projectCount + "+";
+        document.getElementById('project-count').textContent = projectCount;
       } else {
         console.log("Error: The API response does not contain the total number of repositories.");
       }
@@ -124,7 +125,6 @@ function updateProjectCount() {
 
 updateProjectCount();
 
-
 /*==================== BUTTON TO UPDATE PROJECT COUNT ====================*/
 document.getElementById('update-button').addEventListener('click', function () {
   updateProjectCount();
@@ -135,3 +135,12 @@ document.getElementById("update-button").addEventListener("click", function () {
   console.log("Updating data...");
   location.reload();
 });
+
+/*==================== SIMULATE BUTTON CLICK EVERY 60 SECONDS ====================*/
+setInterval(function () {
+  document.getElementById('update-button').click();
+
+  document.getElementById('update-button').click();
+
+  console.log("Buttons clicked automatically at " + new Date().toLocaleTimeString());
+}, 60000);  
