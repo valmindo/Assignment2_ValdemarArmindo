@@ -103,17 +103,17 @@ if (footerContainer) {
 
 /*==================== FETCH AND UPDATE PROJECT COUNT ====================*/
 function updateProjectCount() {
-  fetch('https://api.github.com/users/valdemarabril/repos')
+  fetch('https://api.github.com/users/valmindo')
     .then(response => {
       if (!response.ok) throw new Error("Request failed: " + response.statusText);
       return response.json();
     })
     .then(data => {
-      if (Array.isArray(data)) {
-        const projectCount = data.length;
+      if (data && data.public_repos !== undefined) {
+        const projectCount = data.public_repos;
         document.getElementById('project-count').textContent = projectCount + "+";
       } else {
-        console.log("Error: The API response does not contain a list of repositories.");
+        console.log("Error: The API response does not contain the total number of repositories.");
       }
     })
     .catch(error => {
@@ -123,6 +123,7 @@ function updateProjectCount() {
 }
 
 updateProjectCount();
+
 
 /*==================== BUTTON TO UPDATE PROJECT COUNT ====================*/
 document.getElementById('update-button').addEventListener('click', function () {
